@@ -1,11 +1,11 @@
 {
 "update_url":"http://clients2.google.com/service/update2/crx",
   "name": "UCLA Automated Login",
-  "version": "1.8",
+  "version": "2.0",
   "manifest_version": 2,
-  "icons": { "16": "icon16.png",
-             "48": "icon48.png",
-             "128": "icon128.png" },
+  "icons": { "16": "images/icon16.png",
+             "48": "images/icon48.png",
+             "128": "images/icon128.png" },
   "background": {
     "page": "background.html"
   },
@@ -14,7 +14,7 @@
   ],
   "options_page": "options.html",
   "browser_action": {
-    "default_icon": "icon16.png",
+    "default_icon": "images/icon16.png",
     "default_title": "UCLA Automated Login",
 	"default_popup": "options.html"
   }

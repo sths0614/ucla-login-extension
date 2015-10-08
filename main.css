@@ -1,11 +1,12 @@
 html {
-  background:#fff url(images/silhouette.png) 50% 100px no-repeat fixed;
+  background:#fff url(images/skyline.jpg) 100px no-repeat fixed;
   background-position:bottom;
 }
 
 body {
-  background:url(images/sky.png) repeat-x;
+  /*background:url(images/sky.png) repeat-x;*/
   font-family:"Helvetica Neue",Helvetica,Arial,"Liberation Sans",FreeSans,sans-serif;
+  width: 400px;
   font-size:small;
   margin:0;
   padding:0;
@@ -17,10 +18,10 @@ h1 {
   margin:0;
 }
 
-img {
+/*img {
   margin:0;
   padding:0;
-}
+}*/
 
 a,
 a:link,
@@ -94,6 +95,13 @@ label {
   display:inline-block;
   margin:0;
   padding:1em 0 3em 0;
+}
+
+#header img{
+  display: block;
+  margin-top: -40px;
+  margin-bottom: -20px;
+  margin-left: 50px;
 }
 
 #body {

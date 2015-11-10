@@ -20,6 +20,9 @@ function saveOptions() {
 
   // Update status to let user know options were saved.
   document.getElementById("status").innerHTML = "Saved successfully.";
+  chrome.runtime.sendMessage({updated: true}, function(response) {
+    console.log(response.output);
+  });
 }
 
 /*

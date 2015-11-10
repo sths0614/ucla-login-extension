@@ -1,4 +1,4 @@
-ucla-automated-login-chrome
-===========================
+UCLA-Automated-Login
+====================
 
-Chrome extension to automatically log in to most UCLA authentication pages.
+Google Chrome extension to automatically log in to all UCLA authentication pages.

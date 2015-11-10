@@ -1,23 +1,18 @@
-/*
- * Watchdog to check for a UCLA login page.
+// Maps tabId to the number of tries
+var tried = {};
+
+/* 
+ * Checks the URL, if on UCLA authentication page and have not yet tried 5 times, enter the login info and submits
  */
 function checkForValidUrl(tabId, changeInfo, tab) {
-  // // Page type 1
-  // if(tab.url.indexOf('https://auth.ucla.edu/index.php') > -1) {
-  // 	chrome.tabs.executeScript(
-  //     null, {code:"if(document.getElementsByTagName('input').item(0).value==''){document.getElementsByTagName('input').item(0).value='"+localStorage["user"]+"';document.getElementsByTagName('input').item(1).value='"+sjcl.decrypt("javascript",localStorage["pass"])+"';document.forms.item(0).submit();}"});
-  //   chrome.pageAction.show(tabId);
-  // }
-  // // Page type 2
-  // if (tab.url.indexOf('https://netaccess.logon.ucla.edu/cgi-bin/login') > -1
-  //   || tab.url.indexOf('https://wlanc.resnet.ucla.edu/cgi-bin/login') > -1) {
 
-  // 	chrome.tabs.executeScript(
-  //     null, {code:"if(document.getElementsByTagName('input')!=null){document.getElementsByTagName('input').item(1).value='"+localStorage["user"]+"';document.getElementsByTagName('input').item(2).value='"+sjcl.decrypt("javascript",localStorage["pass"])+"';document.forms.item(0).submit();}else{document.getElementsByTagName('a').item(0).click();}"});
-  //   chrome.pageAction.show(tabId);
-  // }
-  // Updated
-  if(tab.url.indexOf('https://shb.ais.ucla.edu/shibboleth-idp/ucla/authn?') > -1) {
+  // Initializing tried[tabId]
+  if (tried[tabId] === undefined) {
+    tried[tabId] = 0;
+  }
+  if(tab.url.indexOf('https://shb.ais.ucla.edu/shibboleth-idp/ucla/authn?') > -1 && tried[tabId] < 5) {
+    // Increment tried[tabId] so that auto login is limited to 5 tries 
+    tried[tabId]++;
     console.log('in if of background.js');
     chrome.tabs.executeScript(
       null, {code:"if(document.getElementById('logon').value==''){document.getElementById('logon').value='"+localStorage["user"]+"';document.getElementById('pass').value='"+sjcl.decrypt("javascript",localStorage["pass"])+"';document.forms.item(0).submit();}"});
@@ -25,7 +20,20 @@ function checkForValidUrl(tabId, changeInfo, tab) {
   }
 };
 
-/*
- * Listen for any changes to the URL of any tab.
+/* 
+ * Upon receiving message of updating ID and password, empty tried map to allow auto login again
  */
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    console.log(sender.tab ?
+                "from a content script:" + sender.tab.url :
+                "from the extension");
+    if (request.updated == true){
+      tried = {};
+      console.log("tried reset on background");
+      sendResponse({output: "tried reset successfully"});
+    }
+  });
+
+// Listens for any changes to the URL of any tab.
 chrome.tabs.onUpdated.addListener(checkForValidUrl);

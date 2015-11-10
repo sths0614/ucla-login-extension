@@ -12,7 +12,7 @@
   "permissions": [
     "tabs", "https://*/*"
   ],
-  "options_page": "options.html",
+  "options_page": "optionPage.html",
   "browser_action": {
     "default_icon": "images/icon16.png",
     "default_title": "UCLA Automated Login",
